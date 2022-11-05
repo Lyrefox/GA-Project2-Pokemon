@@ -6,8 +6,8 @@
 <h1>Generation: {{select}}</h1>
 <form method="POST">
     
-    <select name="gen_choice">
-        <option value="none" disabled selected>Choose Gen</option>
+    <select name="gen_choice" required>
+        <option value="all" hidden selected>Choose Gen</option>
         <option value="all">All</option>
         <option value=1>I</option>
         <option value=2>II</option>
@@ -18,12 +18,16 @@
         <option value=7>VII</option>
         <option value=8>VIII</option>
     </select>
+    
+    <input type="text" name="pokesearch" placeholder="Search for a pokemon...(Optional)">
     <input type="submit" name="submit_gen">
 </form>
 <ul>
     {% for name, generation, image, pokedex in pokemon %}
     <li>
-        {{name}}
+        <a href="/{{pokedex}}"><h3><span id="PokeName">{{name}}</span></a> - Gen: {{generation}}</h3>
+        <h4>National Pokedex No. {{pokedex}}</h4>
+        <img src="{{image}}" alt="Test">
     </li>
     {% endfor %}
 </ul>
