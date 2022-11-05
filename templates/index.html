@@ -1,16 +1,27 @@
 {% extends 'base_template.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/index.css">
+{% endblock %}
 {% block content %}
-<form action="">
-    <label>Select Which Generation to show</label>
+<h1>Generation: {{select}}</h1>
+<form method="POST">
+    
     <select name="gen_choice">
-        <option value=1>1</option>
-        <option value=2>2</option>
-        <option value=3>3</option>
-        <option value=4>4</option>
-        <option value=5>5</option>
-        <option value=6>6</option>
-        <option value=7>7</option>
-        <option value=8>8</option>
+        <option value="none" disabled selected>Choose Gen</option>
+        <option value=1>I</option>
+        <option value=2>II</option>
+        <option value=3>III</option>
+        <option value=4>IV</option>
+        <option value=5>V</option>
+        <option value=6>VI</option>
+        <option value=7>VII</option>
+        <option value=8>VIII</option>
     </select>
+    <input type="submit" name="submit_gen">
 </form>
+<ul>
+    {% for n in pokemon %}
+    <li>{{n}}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

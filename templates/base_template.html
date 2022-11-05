@@ -8,6 +8,11 @@
     {% block css %}{% endblock %}
 </head>
 <body>
+    {% block Home %}
+    <form action="/">
+        <input type="submit" value="Home">
+    </form>
+    {% endblock %}
     <h1>POKEMON Favourites</h1>
     {% block content %}
 
