@@ -16,3 +16,11 @@ CREATE TABLE favourites (
     FOREIGN KEY (user_id)
         REFERENCES users(user_id)
 );
+
+CREATE TABLE pokemon (
+    poke_id SERIAL PRIMARY KEY,
+    name TEXT,
+    generation INTEGER,
+    image TEXT,
+    pokedex INTEGER
+);
