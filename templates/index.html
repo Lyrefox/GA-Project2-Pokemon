@@ -8,6 +8,7 @@
     
     <select name="gen_choice">
         <option value="none" disabled selected>Choose Gen</option>
+        <option value="all">All</option>
         <option value=1>I</option>
         <option value=2>II</option>
         <option value=3>III</option>
@@ -20,8 +21,10 @@
     <input type="submit" name="submit_gen">
 </form>
 <ul>
-    {% for n in pokemon %}
-    <li>{{n}}</li>
+    {% for name, generation, image, pokedex in pokemon %}
+    <li>
+        {{name}}
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}

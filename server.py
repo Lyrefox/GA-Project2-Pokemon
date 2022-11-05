@@ -1,26 +1,36 @@
 from flask import Flask, render_template, request, redirect
 import requests
+from database import sql_execute
 
 app = Flask(__name__)
 @app.route('/')
 def main():
-    return render_template('index.html')
+    db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon ORDER BY pokedex ASC')
+    pokemon = []
+    for dbdata in db_data:
+        name, generation, image, pokedex = dbdata
+        pokemon.append([name, generation, image, pokedex])
+    return render_template('index.html', pokemon=pokemon)
 
 @app.route('/', methods=["POST"])
 def main_gen():
     select = request.form.get('gen_choice')
     print(select)
-    pokemon_gen = requests.get(f'https://pokeapi.co/api/v2/generation/{select}')
     pokemon = []
-    for n in pokemon_gen.json()['pokemon_species']:
-        name = n['name']
-        # poke_img = requests.get(f'https://pokeapi.co/api/v2/pokemon/{name}')
-        # img = poke_img.json()['sprites']['other']['official-artwork']['front_default']
-        # print(img)
-        pokemon.append(name)
-        
-    return render_template('index.html', select=select, pokemon=pokemon)
-
+    if select == 'all':
+        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon ORDER BY pokedex ASC')
+        pokemon = []
+        for dbdata in db_data:
+            name, generation, image, pokedex = dbdata
+            pokemon.append([name, generation, image, pokedex])
+        return render_template('index.html', select=select, pokemon=pokemon)
+    else:
+        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE generation = %s ORDER BY pokedex ASC', [select])
+        for dbdata in db_data:
+            name, generation, image, pokedex = dbdata
+            pokemon.append([name, generation, image, pokedex])
+        return render_template('index.html', select=select, pokemon=pokemon)
+ 
 
 @app.route('/login')
 def login_form():
