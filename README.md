@@ -2,6 +2,8 @@
 GA Project Number 2
 
 Project Plans
+db = pokemon_favourites
+tables = users, favourites
 using https://pokeapi.co/ api to get the pokemon list and images
 
 https://pokeapi.co/api/v2/generation/ for links to each generation
