@@ -5,17 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favourite Pokemon</title>
-    {% block css %}{% endblock %}
+    {% block css %}
+    <link rel="stylesheet" href="/static/template.css">
+    {% endblock %}
 </head>
 <body>
+    
     {% block Home %}
     <form action="/">
         <input type="submit" value="Home">
     </form>
     {% endblock %}
-    <h1>POKEMON Favourites</h1>
+    {% block login %}
+        {% if session['Logged_in'] == True %}
+            <form action="/logout">
+                <p>You are logged in as {{login_name}} <input type="submit" value="Logout"></p>
+            </form>
+            
+        {% else %}
+            <form action="/register">
+                <input type="submit" value="Register">
+            </form>
+            <form action="/login">
+                <input type="submit" value="Login">
+            </form>
+            
+        {% endif %}
+        {% endblock %}
+    <div id="content">
+        <h1>POKEMON</h1>
+        <h2>Choose Your Favourites!</h2>
+    </div>
+    
     {% block content %}
-
+   
     {% endblock %}
 </body>
 </html>

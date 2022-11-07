@@ -1,0 +1,16 @@
+{% extends "base_template.html" %}
+{% block login %}{% endblock %}
+{% block content %}
+<form method="POST">
+    <label>Name: </label>
+    <input name="name"><br>
+    <label>Email: </label>
+    <input name="email"><br>
+    <label>Password: </label>
+    <input name="password" autocomplete="off"><br>
+    <label>Retype Password: </label>
+    <input name="retypepassword" autocomplete="off"><br>
+    <input type="submit" value="Register">
+</form>
+<h1>{{error}}</h1>
+{% endblock %}
