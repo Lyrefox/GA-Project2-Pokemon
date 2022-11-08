@@ -131,10 +131,15 @@ def register_acc():
 @app.route('/<pokedexnum>')
 def detailed(pokedexnum):
     int(pokedexnum)
-    login_name = session['login_name']
-    user_id = session['Login_id']
+    if session['Logged_in'] == True:
+        login_name = session['login_name']
+        user_id = session['Login_id']
+        check_if_exist = sql_execute('SELECT * from favourites WHERE pokedex = %s and user_id = %s', [pokedexnum, user_id])
+    else:
+        login_name = None
+        check_if_exist = []
     pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
-    check_if_exist = sql_execute('SELECT * from favourites WHERE pokedex = %s and user_id = %s', [pokedexnum, user_id])
+    
     # print(check_if_exist)
     logged_in = session['Logged_in']
     poke_detail = []
