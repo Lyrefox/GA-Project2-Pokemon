@@ -1,0 +1,27 @@
+{% extends "base_template.html" %}
+{% block css %}
+<link rel="stylesheet" href="/static/detailed.css">
+<link rel="stylesheet" href="/static/template.css">
+{% endblock %}
+{% block content %}
+{% for name, generation, image, pokedex in poke_detail %}
+  <div id="details">
+    <h1>{{name}}</h1>
+    <h2>Generation: {{generation}}</h2>
+    <h3>National Pokedex: {{pokedex}}</h3>
+    {% if session['Logged_in'] == True and check_if_exist == None %}
+        <form method="POST">
+            <input type="submit" value="Favourite">
+    {% elif session['Logged_in'] == True and check_if_exist != None %}
+            <input type="submit" value="Un-Favourite">
+        </form>
+    {% endif %}
+
+        <br>
+    <img src="{{image}}" alt="{{name}}">
+  </div>  
+        
+   
+
+    {% endfor %}
+{% endblock %}

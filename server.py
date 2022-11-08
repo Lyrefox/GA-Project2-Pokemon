@@ -3,7 +3,7 @@ import requests
 from database import sql_execute
 import bcrypt
 import os
-
+import psycopg2
 secretkey = os.environ.get('sessionsecretkey')
 app = Flask(__name__)
 app.secret_key = secretkey
@@ -126,6 +126,39 @@ def register_acc():
     else:
         error = "Passwords did not match"
         return render_template('register.html', error=error)
+
+
+@app.route('/<pokedexnum>')
+def detailed(pokedexnum):
+    int(pokedexnum)
+    login_name = session['login_name']
+    conn = psycopg2.connect("dbname=pokemon_favourites")
+    cur = conn.cursor()
+    pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
+    check_if_exist = cur.execute('SELECT * from favourites WHERE EXISTS (SELECT pokedex FROM favourites where pokedex = %s)', [pokedexnum])
+    print(check_if_exist)
+    poke_detail = []
+    for poke in pokemon_info:
+        name, generation, image, pokedex = poke
+        poke_detail.append([name, generation, image, pokedex])
+        logged_in = session['Logged_in']
+        # print(logged_in)
+        conn.close()
+        cur.close()
+    return render_template('detailed.html', poke_detail=poke_detail, logged_in=logged_in, check_if_exist=check_if_exist, login_name=login_name)
+
+@app.route('/<pokedexnum>', methods=["POST"])
+def favourited(pokedexnum):
+    pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
+    poke_detail = []
+    for poke in pokemon_info:
+        name, generation, image, pokedex = poke
+        poke_detail.append([name, generation, image, pokedex])
+    print(name, generation, image, pokedex)
+    user = session['Login_id']
+    print(user)
+    sql_execute('INSERT INTO favourites (user_id, poke_name, poke_img, pokedex, poke_gen) VALUES (%s, %s, %s, %s, %s)', [user, name, image, pokedex, generation])
+    return redirect(f'/{pokedexnum}')
 
 
 if __name__ == '__main__':

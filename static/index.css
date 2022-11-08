@@ -18,3 +18,8 @@ img {
 #PokeName {
     text-decoration: underline;
 }
+/* #heading {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+} */
