@@ -132,10 +132,8 @@ def register_acc():
 def detailed(pokedexnum):
     int(pokedexnum)
     login_name = session['login_name']
-    conn = psycopg2.connect("dbname=pokemon_favourites")
-    cur = conn.cursor()
     pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
-    check_if_exist = cur.execute('SELECT * from favourites WHERE EXISTS (SELECT pokedex FROM favourites where pokedex = %s)', [pokedexnum])
+    check_if_exist = sql_execute('SELECT * from favourites WHERE pokedex = %s', [pokedexnum])
     print(check_if_exist)
     poke_detail = []
     for poke in pokemon_info:
@@ -143,8 +141,6 @@ def detailed(pokedexnum):
         poke_detail.append([name, generation, image, pokedex])
         logged_in = session['Logged_in']
         # print(logged_in)
-        conn.close()
-        cur.close()
     return render_template('detailed.html', poke_detail=poke_detail, logged_in=logged_in, check_if_exist=check_if_exist, login_name=login_name)
 
 @app.route('/<pokedexnum>', methods=["POST"])
@@ -157,9 +153,14 @@ def favourited(pokedexnum):
     print(name, generation, image, pokedex)
     user = session['Login_id']
     print(user)
-    sql_execute('INSERT INTO favourites (user_id, poke_name, poke_img, pokedex, poke_gen) VALUES (%s, %s, %s, %s, %s)', [user, name, image, pokedex, generation])
+    # sql_execute('INSERT INTO favourites (user_id, poke_name, poke_img, pokedex, poke_gen) VALUES (%s, %s, %s, %s, %s)', [user, name, image, pokedex, generation])
     return redirect(f'/{pokedexnum}')
 
+@app.route('/removefav', methods=["POST"])
+def remove_favourite():
+    pokedexnum = request.form.get('pokedex')
+    print(pokedexnum)
+    return "Test"
 
 if __name__ == '__main__':
     # from dotenv import load_dot_env

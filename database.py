@@ -1,7 +1,11 @@
+import os
+db = os.environ.get('DATABASE_URL', 'dbname=pokemon_favourites')
+
+# db = 'dbname=pokemon_favourites'
 import psycopg2
 
 def sql_execute(query, data=[]):
-    conn = psycopg2.connect("dbname=pokemon_favourites")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
     if "SELECT" in query:
         cur.execute(query, data)

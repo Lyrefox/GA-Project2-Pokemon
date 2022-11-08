@@ -9,12 +9,17 @@
     <h1>{{name}}</h1>
     <h2>Generation: {{generation}}</h2>
     <h3>National Pokedex: {{pokedex}}</h3>
-    {% if session['Logged_in'] == True and check_if_exist == None %}
+    {% if session['Logged_in'] == True and check_if_exist == [] %}
         <form method="POST">
             <input type="submit" value="Favourite">
-    {% elif session['Logged_in'] == True and check_if_exist != None %}
+        </form>
+    {% elif session['Logged_in'] == True and check_if_exist != [] %}
+        <form action="/removefav" method="POST">
+            <input hidden type="text" name="pokedex" value="{{pokedex}}">
             <input type="submit" value="Un-Favourite">
         </form>
+            
+        
     {% endif %}
 
         <br>
