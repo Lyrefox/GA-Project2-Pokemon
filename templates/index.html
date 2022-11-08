@@ -4,6 +4,11 @@
 <link rel="stylesheet" href="/static/template.css">
 {% endblock %}
 {% block content %}
+{% if session['Logged_in'] == True %}
+    <form action="/favourites">
+        <input type="submit" value="Favourites">
+    </form>
+{% endif %}
 <h1>Generation: {{select}}</h1>
 <form method="POST">
     

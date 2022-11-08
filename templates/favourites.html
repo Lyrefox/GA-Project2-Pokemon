@@ -1,0 +1,19 @@
+{% extends 'base_template.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/favourites.css">
+<link rel="stylesheet" href="/static/template.css">
+{% endblock %}
+{% block content %}
+<ul>
+    {% for name, generation, image, pokedex in pokemon %}
+    
+        <li>
+            <a href="/{{pokedex}}"><h3><span id="PokeName">{{name}}</span></a> - Gen: {{generation}}</h3>
+            <h4>National Pokedex No. {{pokedex}}</h4>
+            <img src="{{image}}" alt="Test">
+        </li>
+    
+    {% endfor %}
+</ul>
+
+{% endblock %}

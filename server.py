@@ -132,14 +132,16 @@ def register_acc():
 def detailed(pokedexnum):
     int(pokedexnum)
     login_name = session['login_name']
+    user_id = session['Login_id']
     pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
-    check_if_exist = sql_execute('SELECT * from favourites WHERE pokedex = %s', [pokedexnum])
-    print(check_if_exist)
+    check_if_exist = sql_execute('SELECT * from favourites WHERE pokedex = %s and user_id = %s', [pokedexnum, user_id])
+    # print(check_if_exist)
+    logged_in = session['Logged_in']
     poke_detail = []
     for poke in pokemon_info:
         name, generation, image, pokedex = poke
         poke_detail.append([name, generation, image, pokedex])
-        logged_in = session['Logged_in']
+        
         # print(logged_in)
     return render_template('detailed.html', poke_detail=poke_detail, logged_in=logged_in, check_if_exist=check_if_exist, login_name=login_name)
 
@@ -150,17 +152,30 @@ def favourited(pokedexnum):
     for poke in pokemon_info:
         name, generation, image, pokedex = poke
         poke_detail.append([name, generation, image, pokedex])
-    print(name, generation, image, pokedex)
+    # print(name, generation, image, pokedex)
     user = session['Login_id']
-    print(user)
-    # sql_execute('INSERT INTO favourites (user_id, poke_name, poke_img, pokedex, poke_gen) VALUES (%s, %s, %s, %s, %s)', [user, name, image, pokedex, generation])
+    # print(user)
+    sql_execute('INSERT INTO favourites (user_id, poke_name, poke_img, pokedex, poke_gen) VALUES (%s, %s, %s, %s, %s)', [user, name, image, pokedex, generation])
     return redirect(f'/{pokedexnum}')
 
 @app.route('/removefav', methods=["POST"])
 def remove_favourite():
     pokedexnum = request.form.get('pokedex')
     print(pokedexnum)
-    return "Test"
+    user_id = session['Login_id']
+    sql_execute('DELETE FROM favourites WHERE pokedex = %s and user_id = %s', [pokedexnum, user_id])
+    return redirect('/')
+
+@app.route('/favourites')
+def favourites_list():
+    login_name = session['login_name']
+    user_id = session['Login_id']
+    db_data = sql_execute('SELECT poke_name, poke_gen, poke_img, pokedex FROM favourites WHERE user_id = %s ORDER BY pokedex ASC', [user_id])
+    pokemon = []
+    for dbdata in db_data:
+        name, generation, image, pokedex = dbdata
+        pokemon.append([name, generation, image, pokedex])
+    return render_template('favourites.html', pokemon=pokemon, login_name=login_name)
 
 if __name__ == '__main__':
     # from dotenv import load_dot_env
