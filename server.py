@@ -3,7 +3,7 @@ import requests
 from database import sql_execute
 import bcrypt
 import os
-import psycopg2
+
 secretkey = os.environ.get('sessionsecretkey')
 app = Flask(__name__)
 app.secret_key = secretkey
