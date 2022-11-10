@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'PokemonHollow';
+    src: url('/static/pokemon_hollow-webfont.woff') format('woff'),
+         url('/static/pokemon_hollow-webfont.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'PokemonSolid';
+    src: url('/static/pokemon_solid-webfont.woff') format('woff'),
+         url('/static/pokemon_solid-webfont.woff2') format('woff2');
+}
+
+
 body {
     background-color: lightgreen;
 }
@@ -16,7 +28,10 @@ img {
     outline: auto;
 }
 #PokeName {
-    text-decoration: underline;
+    text-transform: capitalize;
+    font-family: PokemonHollow;
+    color: black;
+    font-size: 26px;
 }
 /* #heading {
     display: flex;

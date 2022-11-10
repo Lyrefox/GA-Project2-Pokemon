@@ -8,9 +8,9 @@
     {% for name, generation, image, pokedex in pokemon %}
     
         <li>
-            <a href="/{{pokedex}}"><h3><span id="PokeName">{{name}}</span></a> - Gen: {{generation}}</h3>
+            <h3><span id="PokeName">{{name}}</span><br>Generation: {{generation}}</h3>
             <h4>National Pokedex No. {{pokedex}}</h4>
-            <img src="{{image}}" alt="Test">
+            <a href="/{{pokedex}}"><img src="{{image}}" alt="Test"></a>
         </li>
     
     {% endfor %}

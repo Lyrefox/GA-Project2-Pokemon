@@ -1,16 +1,22 @@
 {% extends "base_template.html" %}
+{% block css %}
+<link rel="stylesheet" href="/static/register.css">
+<link rel="stylesheet" href="/static/template.css">
+{% endblock %}
 {% block login %}{% endblock %}
 {% block content %}
-<form method="POST">
-    <label>Name: </label>
-    <input name="name"><br>
-    <label>Email: </label>
-    <input name="email"><br>
-    <label>Password: </label>
-    <input name="password" autocomplete="off"><br>
-    <label>Retype Password: </label>
-    <input name="retypepassword" autocomplete="off"><br>
-    <input type="submit" value="Register">
-</form>
-<h1>{{error}}</h1>
+<div id="register">
+    <form method="POST">
+        <label>Name: </label><br>
+        <input name="name" placeholder="Enter Name"><br>
+        <label>Email: </label><br>
+        <input name="email" placeholder="Enter Email"><br>
+        <label>Password: </label><br>
+        <input type="password" name="password" autocomplete="off" placeholder="Enter Password"><br>
+        <label>Retype Password: </label><br>
+        <input type="password" name="retypepassword" autocomplete="off" placeholder="Enter Password Again"><br>
+        <input type="submit" value="Register">
+    </form>
+    <h1>{{error}}</h1>
+</div>
 {% endblock %}

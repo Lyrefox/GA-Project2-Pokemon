@@ -1,0 +1,13 @@
+#login {
+    display: flex;
+    justify-content: center;
+}
+#guest {
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+}
+h1 {
+    display: flex;
+    justify-content: center;
+}

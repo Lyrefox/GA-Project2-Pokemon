@@ -14,7 +14,7 @@
     
     <select name="gen_choice" required>
         <option value="all" hidden selected>Choose Gen</option>
-        <option value="all">All</option>
+        <option value="All">All</option>
         <option value=1>I</option>
         <option value=2>II</option>
         <option value=3>III</option>
@@ -31,9 +31,9 @@
 <ul>
     {% for name, generation, image, pokedex in pokemon %}
     <li>
-        <a href="/{{pokedex}}"><h3><span id="PokeName">{{name}}</span></a> - Gen: {{generation}}</h3>
+        <h3><span id="PokeName">{{name}}</span><br>Generation: {{generation}}</h3>
         <h4>National Pokedex No. {{pokedex}}</h4>
-        <img src="{{image}}" alt="Test">
+        <a href="/{{pokedex}}"><img href="/{{pokedex}}" src="{{image}}" alt="Test"></a>
     </li>
     {% endfor %}
 </ul>

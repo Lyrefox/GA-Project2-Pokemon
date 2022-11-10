@@ -1,9 +1,69 @@
+@font-face {
+    font-family: 'PokemonHollow';
+    src: url('/static/pokemon_hollow-webfont.woff') format('woff'),
+         url('/static/pokemon_hollow-webfont.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'PokemonSolid';
+    src: url('/static/pokemon_solid-webfont.woff') format('woff'),
+         url('/static/pokemon_solid-webfont.woff2') format('woff2');
+}
+
+
+
+
 #heading {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 0;
+    max-width: auto;
+}
+
+#heading > h1 {
+    font-family: PokemonSolid, sans-serif;
+    text-shadow: 10px 10px blue;
+    color: yellow;
+    font-size: 72px;
+    margin: 0;
+}
+#heading > h2 {
+    font-family: PokemonSolid, sans-serif;
+    font-size: 36px;
+    text-shadow: 10px 10px yellow;
+    color: blue;
 }
 body {
-    background: lightgreen;
+    /* background: lightgreen; */
+    background: #00e863;
+    
+    /* background-image: url(/static/images/glacier.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center; */
+}
+
+#loginButtons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-top: 5px;
+    padding-right: 5px;
+    border: 2px;
+}
+
+input[type=submit] {
+    background-color: yellow;
+    color: blue;
+    border: none;
+    height: 25px;
+    width: 100px;
+    border-radius: 100px;
+    margin-top: 2px;
+}
+input[type=submit]:hover {
+    /* background-color: rgba(0, 0, 0, 0); */
+    border: 2px solid black;
 }

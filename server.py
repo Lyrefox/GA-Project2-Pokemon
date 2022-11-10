@@ -10,6 +10,7 @@ app.secret_key = secretkey
 
 @app.route('/')
 def main():
+    select = 'All'
     if session.get("Logged_in") != True:
         session['Logged_in'] = False
 
@@ -24,7 +25,7 @@ def main():
     for dbdata in db_data:
         name, generation, image, pokedex = dbdata
         pokemon.append([name, generation, image, pokedex])
-    return render_template('index.html', pokemon=pokemon, login_name=login_name, admin=admin)
+    return render_template('index.html', pokemon=pokemon, login_name=login_name, admin=admin, select=select)
   
 
 @app.route('/', methods=["POST"])
@@ -36,7 +37,7 @@ def main_gen():
     # print(name)
     pokemon = []
     if name_search == "":
-        if select == 'all':
+        if select == 'All':
             db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon ORDER BY pokedex ASC')
             pokemon = []
             for dbdata in db_data:
@@ -50,7 +51,7 @@ def main_gen():
                 pokemon.append([name, generation, image, pokedex])
             return render_template('index.html', select=select, pokemon=pokemon)
     else:
-        db_data = sql_execute(f'SELECT name, generation, image, pokedex FROM pokemon WHERE name = %s ORDER BY pokedex ASC', [name_search])
+        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE name = %s ORDER BY pokedex ASC', [name_search])
         print(db_data)
         for dbdata in db_data:
             name, generation, image, pokedex = dbdata
@@ -62,10 +63,15 @@ def main_gen():
 def login():
     login_id = request.form.get('login_id')
     password = request.form.get('password')
-
+    print(login_id)
     user_data = sql_execute('SELECT user_id, email, name, is_admin FROM users WHERE email = %s', [login_id])
-    password_hash = sql_execute('SELECT pass_hash FROM users where email = %s', [login_id])[0][0]
-    valid = bcrypt.checkpw(password.encode(), password_hash.encode())
+    password_hash = sql_execute('SELECT pass_hash FROM users where email = %s', [login_id])
+    print(password_hash)
+    if password_hash:
+        valid = bcrypt.checkpw(password.encode(), password_hash[0][0].encode())
+    else:
+        error = "User or Pasword Incorrect"
+        return render_template('login.html', error=error)
     
     
     for username in user_data:
@@ -76,14 +82,12 @@ def login():
             user_id = session['Login_id'] = username[0]
             is_admin = session['Admin'] = username[3]
             is_loggedIn = session['Logged_in'] = True
-            print(is_admin)
-            print(user_id)
-            print(loginName)
+    
 
             return response
         else:
-                error = "User or Pasword Incorrect"
-                return render_template('login.html', error=error)
+            error = "User or Pasword Incorrect"
+            return render_template('login.html', error=error)
 
 @app.route('/login')
 def login_form():

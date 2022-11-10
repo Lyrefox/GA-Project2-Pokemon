@@ -17,6 +17,7 @@
     </form>
     {% endblock %}
     {% block login %}
+    <div id="loginButtons">
         {% if session['Logged_in'] == True %}
             <form action="/logout">
                 <p>You are logged in as {{login_name}} <input type="submit" value="Logout"></p>
@@ -31,12 +32,15 @@
             </form>
             
         {% endif %}
+    </div>
+      
         {% endblock %}
+    {% block header %}  
     <div id="heading">
         <h1>POKEMON</h1>
         <h2>Choose Your Favourites!</h2>
     </div>
-    
+    {% endblock %}
     {% block content %}
    
     {% endblock %}

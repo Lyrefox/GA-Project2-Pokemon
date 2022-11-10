@@ -16,8 +16,8 @@ favourites table will be pokemon name, pokemon image, user who favourited (which
 
 
 1. Main page that shows a list of all the pokemon with images preferrably - Done
-2. Click on pokemon to get more detailed information about that pokemon - WIP
+2. Click on pokemon to get more detailed information about that pokemon - Done
 3. Create ability for users to login - Done
-4. create favourite button on detailed page for logged in users to be able to favourite pokemon - WIP
+4. create favourite button on detailed page for logged in users to be able to favourite pokemon - Done
 5. create sort function that can filter pokemon on main page by predefined filters. - Done
 6. Create search function - WIP
