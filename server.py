@@ -31,10 +31,10 @@ def main():
 @app.route('/', methods=["POST"])
 def main_gen():
     select = request.form.get('gen_choice')
-    print(select)
+    
     name_search = request.form.get('pokesearch')
-    print(name_search)
-    # print(name)
+    
+    
     pokemon = []
     if name_search == "":
         if select == 'All':
@@ -52,7 +52,7 @@ def main_gen():
             return render_template('index.html', select=select, pokemon=pokemon)
     else:
         db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE name = %s ORDER BY pokedex ASC', [name_search])
-        print(db_data)
+        
         for dbdata in db_data:
             name, generation, image, pokedex = dbdata
             pokemon.append([name, generation, image, pokedex])
@@ -63,10 +63,10 @@ def main_gen():
 def login():
     login_id = request.form.get('login_id')
     password = request.form.get('password')
-    print(login_id)
+    
     user_data = sql_execute('SELECT user_id, email, name, is_admin FROM users WHERE email = %s', [login_id])
     password_hash = sql_execute('SELECT pass_hash FROM users where email = %s', [login_id])
-    print(password_hash)
+    
     if password_hash:
         valid = bcrypt.checkpw(password.encode(), password_hash[0][0].encode())
     else:
@@ -75,7 +75,7 @@ def login():
     
     
     for username in user_data:
-        print(username[2])
+        
         if login_id == username[1] and valid == True:
             response = redirect('/')
             loginName = session['login_name'] = username[2]
@@ -124,7 +124,7 @@ def register_acc():
     retypepassword = request.form.get('retypepassword')
     if password == retypepassword:
         password_encrypt = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-        print(password_encrypt)
+        
         sql_execute('INSERT INTO users (name, pass_hash, is_admin, email) VALUES (%s, %s, False, %s)', [name, password_encrypt, email])
         return redirect('/')
     else:
@@ -142,16 +142,16 @@ def detailed(pokedexnum):
     else:
         login_name = None
         check_if_exist = []
-    pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
+        pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
     
-    # print(check_if_exist)
+    
     logged_in = session['Logged_in']
     poke_detail = []
     for poke in pokemon_info:
         name, generation, image, pokedex = poke
         poke_detail.append([name, generation, image, pokedex])
         
-        # print(logged_in)
+    
     return render_template('detailed.html', poke_detail=poke_detail, logged_in=logged_in, check_if_exist=check_if_exist, login_name=login_name)
 
 @app.route('/<pokedexnum>', methods=["POST"])
@@ -161,16 +161,15 @@ def favourited(pokedexnum):
     for poke in pokemon_info:
         name, generation, image, pokedex = poke
         poke_detail.append([name, generation, image, pokedex])
-    # print(name, generation, image, pokedex)
+    
     user = session['Login_id']
-    # print(user)
+    
     sql_execute('INSERT INTO favourites (user_id, poke_name, poke_img, pokedex, poke_gen) VALUES (%s, %s, %s, %s, %s)', [user, name, image, pokedex, generation])
     return redirect(f'/{pokedexnum}')
 
 @app.route('/removefav', methods=["POST"])
 def remove_favourite():
     pokedexnum = request.form.get('pokedex')
-    print(pokedexnum)
     user_id = session['Login_id']
     sql_execute('DELETE FROM favourites WHERE pokedex = %s and user_id = %s', [pokedexnum, user_id])
     return redirect('/')
