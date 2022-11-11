@@ -42,7 +42,12 @@ def main_gen():
     select = request.form.get('gen_choice')
     
     name_search = request.form.get('pokesearch')
-    login_name = session['login_name']
+    if session.get('login_name') is not None:
+        login_name = session['login_name']
+        admin = session['Admin']
+    else:
+        admin = False
+        login_name = None
     
     pokemon = []
     if name_search == "":
