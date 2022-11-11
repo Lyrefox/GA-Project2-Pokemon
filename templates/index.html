@@ -13,7 +13,7 @@
 <form method="POST">
     
     <select name="gen_choice" required>
-        <option value="all" hidden selected>Choose Gen</option>
+        <option value="All" hidden selected>Choose Gen</option>
         <option value="All">All</option>
         <option value=1>I</option>
         <option value=2>II</option>
@@ -33,7 +33,7 @@
     <li>
         <h3><span id="PokeName">{{name}}</span><br>Generation: {{generation}}</h3>
         <h4>National Pokedex No. {{pokedex}}</h4>
-        <a href="/{{pokedex}}"><img href="/{{pokedex}}" src="{{image}}" alt="Test"></a>
+        <a href="/{{pokedex}}"><img href="/{{pokedex}}" src="{{image}}" alt="{{name}}"></a>
     </li>
     {% endfor %}
 </ul>

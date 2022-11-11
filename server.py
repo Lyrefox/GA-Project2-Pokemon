@@ -11,7 +11,12 @@ app.secret_key = secretkey
 
 @app.route('/')
 def main():
-    select = 'All'
+    if session['Gen'] == None:
+        session['Gen'] = 'All'
+        select = 'All'
+    else:
+        select = session['Gen']
+    
     if session.get("Logged_in") != True:
         session['Logged_in'] = False
 
@@ -21,7 +26,10 @@ def main():
     else:
         admin = False
         login_name = None
-    db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon ORDER BY pokedex ASC')
+    if select == 'All':
+        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon ORDER BY pokedex ASC')
+    else:
+        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE generation = %s ORDER BY pokedex ASC', [select])
     pokemon = []
     for dbdata in db_data:
         name, generation, image, pokedex = dbdata
@@ -34,30 +42,32 @@ def main_gen():
     select = request.form.get('gen_choice')
     
     name_search = request.form.get('pokesearch')
-    
+    login_name = session['login_name']
     
     pokemon = []
     if name_search == "":
         if select == 'All':
             db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon ORDER BY pokedex ASC')
+            session['Gen'] = 'All'
             pokemon = []
             for dbdata in db_data:
                 name, generation, image, pokedex = dbdata
                 pokemon.append([name, generation, image, pokedex])
-            return render_template('index.html', select=select, pokemon=pokemon)
+            return render_template('index.html', select=select, pokemon=pokemon, login_name=login_name)
         else:
+            session['Gen'] = select
             db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE generation = %s ORDER BY pokedex ASC', [select])
             for dbdata in db_data:
                 name, generation, image, pokedex = dbdata
                 pokemon.append([name, generation, image, pokedex])
-            return render_template('index.html', select=select, pokemon=pokemon)
+            return render_template('index.html', select=select, pokemon=pokemon, login_name=login_name)
     else:
         db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE name = %s ORDER BY pokedex ASC', [name_search])
         
         for dbdata in db_data:
             name, generation, image, pokedex = dbdata
             pokemon.append([name, generation, image, pokedex])
-        return render_template('index.html', select=select, pokemon=pokemon)
+        return render_template('index.html', select=select, pokemon=pokemon, login_name=login_name)
 
 
 @app.route('/login', methods=["POST"])
