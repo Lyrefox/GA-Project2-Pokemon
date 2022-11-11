@@ -140,6 +140,7 @@ def detailed(pokedexnum):
         login_name = session['login_name']
         user_id = session['Login_id']
         check_if_exist = sql_execute('SELECT * from favourites WHERE pokedex = %s and user_id = %s', [pokedexnum, user_id])
+        pokemon_info = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE pokedex = %s', [pokedexnum])
     else:
         login_name = None
         check_if_exist = []
