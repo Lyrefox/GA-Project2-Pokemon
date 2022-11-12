@@ -22,6 +22,15 @@ img {
     width: 200px;
     height: 200px;
     outline: auto;
+    border-radius: 40px;
+}
+li > a {
+    text-decoration: none;
+    color: lightgreen;
+}
+li > a:visited {
+    text-decoration: none;
+    color: lightgreen;
 }
 #PokeName2 {
     text-transform: capitalize;
