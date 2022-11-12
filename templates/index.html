@@ -11,7 +11,6 @@
 {% endif %}
 <h1>Generation: {{select}}</h1>
 <form method="POST">
-    
     <select name="gen_choice" required>
         <option value="All" hidden selected>Choose Gen</option>
         <option value="All">All</option>
@@ -25,7 +24,7 @@
         <option value=8>VIII</option>
     </select>
     
-    <input type="text" name="pokesearch" placeholder="Search for a pokemon...(Optional)">
+    <input id="pokesearch" type="text" name="pokesearch" placeholder="Search for a pokemon...(Optional)">
     <input type="submit" name="submit_gen">
 </form>
 <ul>

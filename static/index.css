@@ -42,8 +42,6 @@ li > a:visited {
     color: black;
     font-size: 26px;
 }
-/* #heading {
-    display: flex;
-    justify-content: center;
-    flex-flow: row wrap;
-} */
+#pokesearch {
+    width: 200px;
+}
