@@ -1,5 +1,5 @@
 # GA-Project2-Pokemon
-![img](static/images/image_processing20210626-7167-doy57.png)
+![img](static/images/image_processing20210626-7167-doy57small.png)
 ## ![img](static/images/icons8-pokeball-color-32.png) GA Project Number 2 ![img](static/images/icons8-pokeball-color-32.png)
 
 
