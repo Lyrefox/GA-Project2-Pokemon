@@ -68,8 +68,8 @@ def main_gen():
                 pokemon.append([name, generation, image, pokedex])
             return render_template('index.html', select=select, pokemon=pokemon, login_name=login_name)
     else:
-        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE name = %s ORDER BY pokedex ASC', [name_search])
-        
+        db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE name LIKE %(name)s ORDER BY pokedex ASC', [name_search])
+        print(db_data)
         for dbdata in db_data:
             name, generation, image, pokedex = dbdata
             pokemon.append([name, generation, image, pokedex])
@@ -205,4 +205,4 @@ def favourites_list():
 
 if __name__ == '__main__':
     # from dotenv import load_dot_env
-    app.run(debug=True)
+    app.run()
