@@ -11,7 +11,7 @@ app.secret_key = secretkey
 
 @app.route('/')
 def main():
-    if session['Gen'] == None:
+    if session.get('Gen') == None:
         session['Gen'] = 'All'
         select = 'All'
     else:
@@ -59,6 +59,7 @@ def main_gen():
                 name, generation, image, pokedex = dbdata
                 pokemon.append([name, generation, image, pokedex])
             return render_template('index.html', select=select, pokemon=pokemon, login_name=login_name)
+
         else:
             session['Gen'] = select
             db_data = sql_execute('SELECT name, generation, image, pokedex FROM pokemon WHERE generation = %s ORDER BY pokedex ASC', [select])
