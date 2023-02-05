@@ -26,7 +26,7 @@ Its a great API that has every little bit of information on every pokemon so che
 5. create sort function that can filter pokemon on main page by predefined filters. - Done
     - created filter that allows users to filter the wide selection of pokemon based on the generation they are from.
 6. Create search function - Done
-    - I have tried adding a search function so you can search for specific pokemon but couldn't get the interaction between python and SQL formatting correct. So search bar is hidden for time being.
+    - Search Bar Fully Working.
 7. Create Database - Done
     - create database and tables to hold user info, pokemon info and people favourite pokemon.
     - run python script to fill in pokemon information from API.
