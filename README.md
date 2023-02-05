@@ -3,7 +3,7 @@
 ## ![img](static/images/icons8-pokeball-color-32.png) GA Project Number 2 ![img](static/images/icons8-pokeball-color-32.png)
 
 
-https://pokemon-favourites.herokuapp.com/
+https://pokemon-favourites.herokuapp.com/  -- Currently Down, General Assembly working on a Solution
 
 Here is a website where you can create a list of your favourite pokemon!
 Users must be logged in to create a favoruite list.
